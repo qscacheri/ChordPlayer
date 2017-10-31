@@ -1,7 +1,10 @@
+import java.util.Arrays;
+
 public class Maj extends Chord {
     protected int[] noteArray;
     protected int NUMNOTES = 3;
     protected char sharp = '#';
+
     protected char flat = 'b';
     protected char natural = 'n';
 
@@ -78,8 +81,9 @@ public class Maj extends Chord {
     protected void findSusNum(String s) {
         String temp = "";
         int tempNum;
+        int counter = 3;
         String[] susArray = s.split(",");
-
+        //System.out.println(Arrays.deepToString(susArray));
         for (int l = 0; l < susArray.length; l++) {
             tempNum = 0;
             temp = "";
@@ -88,11 +92,10 @@ public class Maj extends Chord {
             //FLAT
 
             if (susArray[l].charAt(0) == 'b') {
-                //System.out.println(susArray[l].length());
                 for (int k = 1; k < susArray[l].length(); k++) {
                     temp += susArray[l].charAt(k);
                     tempNum = Integer.parseInt(temp);
-                    //System.out.println(temp+'t');
+//                    System.out.println(temp+'t');
                 }
                 //SEVENTH
                 if (tempNum == 7) {
@@ -117,24 +120,22 @@ public class Maj extends Chord {
                         tempNum = rootNum - 8;
                     } else
                         tempNum = rootNum + 4;
-                    System.out.println(tempNum + "tempnum");
+                    //System.out.println(tempNum + "tempnum");
                 }
 
                 //THIRTEENTH
                 else if (tempNum == 13) {
-                    //System.out.println("im 13");
+                    //System.out.println(rootNum);
                     if (rootNum + 8 > 12) {
                         tempNum = rootNum - 4;
-                    } else
+                    } else {
                         tempNum = rootNum + 8;
+                        System.out.println("num of notes is " + NUMNOTES);
+                    }
+
                 }
                 //System.out.println(NUMNOTES+"NUM");
-                for (int n = 0; n < NUMNOTES; n++) {
 
-                    if (noteArray[n] == 0) {
-                        noteArray[n] = tempNum;
-                    }
-                }
             } else if (susArray[l].charAt(0) == '#') {
                 for (int k = 1; k < susArray[l].length(); k++) {
                     temp += susArray[l].charAt(k);
@@ -152,10 +153,10 @@ public class Maj extends Chord {
 
                 //ELEVENTH
                 else if (tempNum == 11) {
-                    if (rootNum + 7 > 12) {
+                    if (rootNum + 6 > 12) {
                         tempNum = rootNum - 6;
                     } else
-                        tempNum = rootNum + 7;
+                        tempNum = rootNum + 6;
                 }
 
                 //THIRTEENTH
@@ -165,12 +166,8 @@ public class Maj extends Chord {
                     } else
                         tempNum = rootNum + 10;
                 }
-                //System.out.println(tempNum+"temp nump");
-                for (int n = 0; n < NUMNOTES; n++) {
-                    if (noteArray[n] == 0) {
-                        noteArray[n] = tempNum;
-                    }
-                }
+
+
             }                        //SHARP
 
             //NATURAL
@@ -215,15 +212,11 @@ public class Maj extends Chord {
                 }
 
 
-                for (int n = 0; n < NUMNOTES; n++) {
-                    if (noteArray[n] == 0) {
-                        noteArray[n] = tempNum;
-
-                        break;
-                    }
-                }
             }//NATURAL
+            System.out.println(counter + "counter");
+            noteArray[counter] = tempNum;
+            counter++;
         }
 
     }
-} //LAST ONE
+} //End of class
