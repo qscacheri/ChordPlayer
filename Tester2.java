@@ -1,13 +1,29 @@
-public class FretBoard {
+import java.util.Arrays;
+
+import java.io.*;
+import java.io.IOException;
 
 
-    int counter = 0;
-    int[][] fretBoard = new int[6][4];
-    int[][] yesFret = new int[6][4];
-    int[][][] chordDiagrams = new int[3][6][4];
+public class Tester2 {
+    //did it work?
+    public static void main(String[] args) throws IOException {
+        Maj C = new Maj("C", "7");
+        Maj F = new Maj("F", "b7");
+        Maj G = new Maj("G", "b7");
+        Maj[] chordList = new Maj[3];
+        chordList[0] = C;
+        chordList[1] = F;
+        chordList[2] = G;
 
-    public FretBoard(Maj[] c, int n) {
+        System.out.println(Fretboard(chordList, 3));
+    }
 
+
+    public static String Fretboard(Maj[] c, int n) throws IOException {
+        int counter = 0;
+        int[][] fretBoard = new int[6][4];
+        int[][] yesFret = new int[6][4];
+        int[][][] chordDiagrams = new int[3][6][4];
 
         {
             fretBoard[5][0] = 12;
@@ -61,6 +77,9 @@ public class FretBoard {
 
                     }
                 }
+
+//                chordDiagrams[counter] = yesFret;
+//                counter++;
             }
 
 
@@ -75,13 +94,22 @@ public class FretBoard {
                         System.out.print(" , ");
                     }
                     System.out.println("}");
-
-
                 }
                 System.out.print("\n\n\n");
             }
         }
 
+        File tmpFile = File.createTempFile("chordDiagrams1.0", ".txt");
+        FileWriter writer = new FileWriter(tmpFile);
+        writer.write(java.util.Arrays.deepToString(chordDiagrams));
+        writer.close();
+        System.out.println("Temp file : " + tmpFile.getAbsolutePath());
+        String cDString = java.util.Arrays.deepToString(chordDiagrams);
+        cDString = cDString.replace("[", "");
+        cDString = cDString.replace("]", "");
+        cDString = cDString.replace(" ", "");
+        cDString = cDString.replace(",", "");
+        return n + "" + cDString;
     }
 
     public static void zeroArray(int[][] a) {
@@ -95,4 +123,5 @@ public class FretBoard {
 
 
 }
+
 
