@@ -1,13 +1,13 @@
-public class FretBoard {
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
-
-    int counter = 0;
-    int[][] fretBoard = new int[6][4];
-    int[][] yesFret = new int[6][4];
-    int[][][] chordDiagrams = new int[3][6][4];
-
-    public FretBoard(Maj[] c, int n) {
-
+public class FretBoard{
+    public static String makeFretBoard(Maj[] c, int n) throws IOException {
+        int counter = 0;
+        int[][] fretBoard = new int[6][4];
+        int[][] yesFret = new int[6][4];
+        int[][][] chordDiagrams = new int[3][6][4];
 
         {
             fretBoard[5][0] = 12;
@@ -61,6 +61,9 @@ public class FretBoard {
 
                     }
                 }
+
+//                chordDiagrams[counter] = yesFret;
+//                counter++;
             }
 
 
@@ -75,13 +78,22 @@ public class FretBoard {
                         System.out.print(" , ");
                     }
                     System.out.println("}");
-
-
                 }
                 System.out.print("\n\n\n");
             }
         }
 
+        File tmpFile = File.createTempFile("chordDiagrams1.0", ".txt");
+        FileWriter writer = new FileWriter(tmpFile);
+        writer.write(java.util.Arrays.deepToString(chordDiagrams));
+        writer.close();
+        System.out.println("Temp file : " + tmpFile.getAbsolutePath());
+        String cDString = java.util.Arrays.deepToString(chordDiagrams);
+        cDString = cDString.replace("[", "");
+        cDString = cDString.replace("]", "");
+        cDString = cDString.replace(" ", "");
+        cDString = cDString.replace(",", "");
+        return n + "" + cDString;
     }
 
     public static void zeroArray(int[][] a) {
@@ -92,7 +104,4 @@ public class FretBoard {
 
         }
     }
-
-
 }
-
